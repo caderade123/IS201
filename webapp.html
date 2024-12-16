@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dance Move Randomizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            transition: background-color 0.5s ease;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        #style-select {
+            width: 200px;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        #generate-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #FF69B4;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #generate-btn:hover {
+            background-color: #FF1493;
+        }
+        #moves {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+        #back-link {
+            margin-top: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        #back-link:hover {
+            color: #FF69B4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dance Move Randomizer</h1>
+    <select id="style-select">
+        <option value="hiphop">Hip Hop</option>
+        <option value="ballet">Ballet</option>
+        <option value="salsa">Salsa</option>
+        <option value="breakdance">Breakdance</option>
+        <option value="contemporary">Contemporary</option>
+    </select>
+    <button id="generate-btn">Generate Dance Moves</button>
+    <div id="moves"></div>
+    <a href="scratch.html" id="back-link">Back to My Passion</a>
+
+    <script>
+        const danceMoves = {
+            hiphop: ['Pop and Lock', 'Wave', 'Moonwalk', 'Robot', 'Krump', 'Dougie', 'Running Man'],
+            ballet: ['Plié', 'Pirouette', 'Arabesque', 'Grand Jeté', 'Fouetté', 'Pas de Bourrée', 'Relevé'],
+            salsa: ['Cross-body Lead', 'Cuban Motion', 'Suzie Q', 'Copa', 'Enchufla', 'Dile Que No', 'Setenta'],
+            breakdance: ['Toprock', 'Downrock', 'Freeze', 'Windmill', 'Headspin', 'Flare', 'Six-step'],
+            contemporary: ['Contract and Release', 'Fall and Recovery', 'Tilt', 'Spiral', 'Improvisation', 'Floor Work', 'Leaps']
+        };
+
+        function generateMoves() {
+    const style = document.getElementById('style-select').value;
+    const movesDiv = document.getElementById('moves');
+    const moves = danceMoves[style];
+    const sequence = [];
+    let lastMove = null;
+
+    for (let i = 0; i < 4; i++) {
+        let move;
+        do {
+            move = moves[Math.floor(Math.random() * moves.length)];
+        } while (move === lastMove);
+        
+        sequence.push(move);
+        lastMove = move;
+    }
+
+    movesDiv.innerHTML = `
+        <h2>${style.charAt(0).toUpperCase() + style.slice(1)} Dance Sequence:</h2>
+        <ol>
+            ${sequence.map(move => `<li>${move}</li>`).join('')}
+        </ol>
+    `;
+
+    // Change background color based on dance style
+    const colors = {
+        hiphop: '#FFD700',
+        ballet: '#FFC0CB',
+        salsa: '#FF4500',
+        breakdance: '#4682B4',
+        contemporary: '#98FB98'
+    };
+    document.body.style.backgroundColor = colors[style] + '22';
+}
+
+        document.getElementById('generate-btn').addEventListener('click', generateMoves);
+    </script>
+</body>
+</html>
